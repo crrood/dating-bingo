@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Entity from './components/Entity.vue'
-import EntityList from './components/EntityList.vue'
 import LandingPage from './components/LandingPage.vue'
+import ResourceDetail from './components/ResourceDetail.vue'
+import ResourceList from './components/ResourceList.vue'
 
 const routes = [
   {
@@ -10,15 +10,15 @@ const routes = [
     component: LandingPage
   },
   {
-    path: '/entity/:id',
-    name: 'Entity',
-    component: Entity
+    path: '/resourceA',
+    name: 'ResourceList',
+    component: ResourceList
   },
   {
-    path: '/entity',
-    name: 'EntityList',
-    component: EntityList
-  }
+    path: '/resourceA/:id',
+    name: 'ResourceDetail',
+    component: ResourceDetail
+  },
 ]
 
 const router = createRouter({

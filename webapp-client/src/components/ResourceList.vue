@@ -1,9 +1,9 @@
 <template>
   <div class="bg-primary">
-    <EntityListEntry
-      v-for="entity in state.entities"
-      :key="entity._id?.$oid"
-      :entity="entity"
+    <ResourceListEntry
+      v-for="resource in state.resources"
+      :key="resource._id?.$oid"
+      :resource="resource"
     />
   </div>
   <!-- Previous / next page buttons -->
@@ -48,40 +48,38 @@
 </template>
 
 <script setup lang="ts">
-import type { Entity } from '@/Types';
+import type { ResourceA } from '@/Types';
 import axios from 'axios';
 import { reactive, watch } from 'vue';
-import EntityListEntry from './EntityListEntry.vue';
+import ResourceListEntry from './ResourceListEntry.vue';
 
 interface State {
-  entities: Array<Entity>;
+  resources: Array<ResourceA>;
   pageNumber: number;
 }
 const state: State = reactive({
-  entities: [],
+  resources: [],
   pageNumber: 0
 })
 
 watch(() => state.pageNumber, () => {
-  getEntityList(state.pageNumber);
+  getResourceList(state.pageNumber);
 });
 
-function getEntityList(pageNumber: number) {
+function getResourceList(pageNumber: number) {
   if (pageNumber < 0) {
     pageNumber = 0;
   }
-  const path = '/api/entity?page=' + pageNumber
+  const path = '/api/resourceA?page=' + pageNumber
   axios.get(path)
     .then(res => {
-      console.log(res.data);
-      state.entities = res.data;
-      console.log(state.entities);
+      state.resources = res.data;
     })
     .catch(error => {
       console.error(error);
     })
 }
 
-getEntityList(state.pageNumber);
+getResourceList(state.pageNumber);
 
 </script>

@@ -1,5 +1,5 @@
 {
-  "entity": [
+  "resourceA": [
     {
       "key1": "valueA",
       "key2": "valueB"
@@ -9,7 +9,7 @@
       "key2": "valueD"
     }
   ],
-  "anotherEntity": [
+  "resourceB": [
     {
       "key3": "valueA",
       "key4": "valueB"

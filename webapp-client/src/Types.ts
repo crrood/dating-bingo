@@ -1,25 +1,25 @@
-export interface Entity {
+export interface ResourceA {
   _id?: {
     $oid: string;
   }
   metadata?: MetaData;
-  data: EntityData;
+  data: ResourceAData;
 }
 
-export interface EntityData {
+export interface ResourceAData {
   key1: string;
   key2: string;
 }
 
-export interface AnotherEntity {
+export interface ResourceB {
   _id?: {
     $oid: string;
   }
   metadata?: MetaData;
-  data: AnotherEntityData;
+  data: ResourceBData;
 }
 
-export interface AnotherEntityData {
+export interface ResourceBData {
   key3: string;
   key4: string;
 }

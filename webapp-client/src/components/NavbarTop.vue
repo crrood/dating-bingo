@@ -19,7 +19,7 @@
     <div class="flex justify-start place-items-center gap-8 text-2xl">
       <router-link
         class=""
-        to="/entity"
+        to="/resourceA"
       >
         WebApp
       </router-link>

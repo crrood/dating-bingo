@@ -1,14 +1,14 @@
 <template>
   <div class="grid justify-center mt-4">
     <div class="text-xl font-bold">
-      Entity
+      ResourceDetail
     </div>
     {{ state.data }}
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Entity } from '@/Types';
+import type { ResourceA } from '@/Types';
 import axios from 'axios';
 import { onBeforeMount, reactive } from 'vue';
 import { useRoute } from 'vue-router';
@@ -18,7 +18,7 @@ const route = useRoute();
 // reactive state
 interface State {
   editing: boolean;
-  data: Entity | undefined;
+  data: ResourceA | undefined;
 }
 const state: State = reactive({
   editing: false,
@@ -27,23 +27,23 @@ const state: State = reactive({
 
 // initialize
 onBeforeMount(() => {
-  if (route.params.entity) {
-    if (typeof route.params.entity !== 'string') {
-      console.error('Entity parameter is not a string');
+  if (route.params.resource) {
+    if (typeof route.params.resource !== 'string') {
+      console.error('Resource parameter is not a string');
       return;
     }
-    state.data = JSON.parse(route.params.entity) as Entity;
+    state.data = JSON.parse(route.params.resource) as ResourceA;
   }
   else {
-    getEntity(route.params.id);
+    getResource(route.params.id);
   }
 })
 
 // methods
-function getEntity(id: string | string[]) {
-  const path = '/api/entity/' + id;
+function getResource(id: string | string[]) {
+  const path = '/api/resourceA/' + id;
   axios.get(path)
-    .then((res: { data: Entity; }) => {
+    .then((res: { data: ResourceA; }) => {
       state.data = res.data;
     })
     .catch((error: Error) => {

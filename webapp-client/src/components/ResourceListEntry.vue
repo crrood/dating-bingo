@@ -2,24 +2,24 @@
   <div
     class="flex place-items-center space-x-6 m-4 p-4" 
     @click="router.push({ 
-      name: 'Entity',
-      params: { id: props.entity._id?.$oid, entity: JSON.stringify(props.entity) }})"
+      name: 'ResourceDetail',
+      params: { id: props.resource._id?.$oid, resource: JSON.stringify(props.resource) }})"
   >
     <div class="text-white">
       <div class="text-bold">
-        EntityListEntry:
+        ResourceListEntry:
       </div>
-      {{ JSON.stringify(props.entity) }}
+      {{ JSON.stringify(props.resource) }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Entity } from '@/Types';
+import type { ResourceA } from '@/Types';
 import { defineProps } from 'vue';
 import router from '../router';
 
 const props = defineProps<{
-  entity: Entity,
+  resource: ResourceA,
 }>();
 </script>
