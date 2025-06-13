@@ -1,17 +1,25 @@
 <template>
-  <div class="flex place-items-center space-x-6 m-4 p-4" 
-      @click="router.push({ 
+  <div
+    class="flex place-items-center space-x-6 m-4 p-4" 
+    @click="router.push({ 
       name: 'Entity',
-      params: { id: entity._id.$oid, entity: JSON.stringify(entity) }})">
-      <div class="text-white">
-        <div class="text-bold">EntityListEntry:</div>
-        {{ entity }}
+      params: { id: props.entity._id?.$oid, entity: JSON.stringify(props.entity) }})"
+  >
+    <div class="text-white">
+      <div class="text-bold">
+        EntityListEntry:
       </div>
+      {{ JSON.stringify(props.entity) }}
+    </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Entity } from '@/Types';
+import { defineProps } from 'vue';
 import router from '../router';
 
-defineProps(['entity']);
+const props = defineProps<{
+  entity: Entity,
+}>();
 </script>

@@ -3,7 +3,7 @@
   <router-view />
 </template>
 
-<script setup>
-import NavbarTop from "./components/NavbarTop.vue"
+<script setup lang="ts">
+import NavbarTop from "./components/NavbarTop.vue";
 
 </script>

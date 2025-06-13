@@ -4,8 +4,9 @@
   </div>
 </template>
 
-<script setup>
-import { inject, onMounted, reactive } from 'vue';
+<script setup lang="ts">
+import axios from 'axios';
+import { onMounted, reactive } from 'vue';
 
 // reactive state
 const state = reactive({
@@ -13,9 +14,8 @@ const state = reactive({
 });
 
 // methods
-const axios = inject('axios');
 onMounted(() => {
-  const path = '/';
+  const path = '/api/';
   axios.get(path)
     .then(res => {
       state.response = res.data;

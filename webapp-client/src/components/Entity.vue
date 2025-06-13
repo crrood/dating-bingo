@@ -1,69 +1,52 @@
 <template>
   <div class="grid justify-center mt-4">
-    <div class="text-xl font-bold">Entity</div>
+    <div class="text-xl font-bold">
+      Entity
+    </div>
     {{ state.data }}
   </div>
 </template>
 
-<script setup>
-import { inject, reactive } from 'vue';
+<script setup lang="ts">
+import type { Entity } from '@/Types';
+import axios from 'axios';
+import { onBeforeMount, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
 // reactive state
-const state = reactive({
+interface State {
+  editing: boolean;
+  data: Entity | undefined;
+}
+const state: State = reactive({
   editing: false,
-  data: {},
+  data: undefined,
 });
 
 // initialize
-const axios = inject('axios');
-if (route.params.entity) {
-  state.data = JSON.parse(route.params.entity);
-}
-else {
-  getEntity(route.params.id);
-}
+onBeforeMount(() => {
+  if (route.params.entity) {
+    if (typeof route.params.entity !== 'string') {
+      console.error('Entity parameter is not a string');
+      return;
+    }
+    state.data = JSON.parse(route.params.entity) as Entity;
+  }
+  else {
+    getEntity(route.params.id);
+  }
+})
 
 // methods
-function getEntity(id) {
-  const path = '/entity/' + id;
+function getEntity(id: string | string[]) {
+  const path = '/api/entity/' + id;
   axios.get(path)
-    .then(res => {
+    .then((res: { data: Entity; }) => {
       state.data = res.data;
     })
-    .catch(error => {
-      console.error(error);
-    })
-}
-
-function editBtnClicked() {
-  if (state.editing) {
-    saveData();
-  }
-  toggleInputs();
-  state.editing = !state.editing;
-}
-
-function toggleInputs() {
-  const inputs = document.querySelectorAll('input');
-  inputs.forEach(input => {
-    input.disabled = !input.disabled;
-  });
-  const textareas = document.querySelectorAll('textarea');
-  textareas.forEach(textarea => {
-    textarea.disabled = !textarea.disabled;
-  });
-}
-
-function saveData() {
-  const path = '/entity/' + state.data._id.$oid;
-  axios.put(path, state.data)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(error => {
+    .catch((error: Error) => {
       console.error(error);
     })
 }
