@@ -19,9 +19,9 @@
     <div class="flex justify-start place-items-center gap-8 text-2xl">
       <router-link
         class=""
-        to="/resourceA"
+        to="/"
       >
-        WebApp
+        Dating Bingo!
       </router-link>
     </div>
   </nav>

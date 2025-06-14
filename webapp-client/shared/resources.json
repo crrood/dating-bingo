@@ -1,22 +1,265 @@
 {
-  "resourceA": [
+  "bingoCard": [
     {
-      "key1": "valueA",
-      "key2": "valueB"
+      "prospectName": "Marieka",
+      "tileMatrix": [
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "true"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "true"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ]
+      ]
     },
     {
-      "key1": "valueC",
-      "key2": "valueD"
+      "prospectName": "Gabby",
+      "tileMatrix": [
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "true"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "true"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ],
+        [
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          },
+          {
+            "index": -1,
+            "checked": "false"
+          }
+        ]
+      ]
     }
   ],
-  "resourceB": [
+  "criteriaArray": [
     {
-      "key3": "valueA",
-      "key4": "valueB"
-    },
-    {
-      "key3": "valueC",
-      "key4": "valueD"
+      "criteria": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
     }
   ]
 }

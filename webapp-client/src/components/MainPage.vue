@@ -15,7 +15,7 @@ const state = reactive({
 
 // methods
 onMounted(() => {
-  const path = '/api/';
+  const path = '/api/bingoCard';
   axios.get(path)
     .then(res => {
       state.response = res.data;
