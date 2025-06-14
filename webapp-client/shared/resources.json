@@ -1,0 +1,22 @@
+{
+  "resourceA": [
+    {
+      "key1": "valueA",
+      "key2": "valueB"
+    },
+    {
+      "key1": "valueC",
+      "key2": "valueD"
+    }
+  ],
+  "resourceB": [
+    {
+      "key3": "valueA",
+      "key4": "valueB"
+    },
+    {
+      "key3": "valueC",
+      "key4": "valueD"
+    }
+  ]
+}
