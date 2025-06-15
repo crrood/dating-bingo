@@ -15,11 +15,13 @@ services:
       - internal
 
   client-dev:
-    image: node:22.9-slim
+    image: node:24.2-slim
     build:
       context: ./webapp-client
     env_file:
       - ./webapp-client/shared/.env.${ENV}
+    volumes:
+      - ./webapp-client:/webapp-client
     stop_signal: SIGTERM
     depends_on:
       - caddy-${ENV}
