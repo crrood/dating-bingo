@@ -1,49 +1,9 @@
 <template>
-  <div class="max-w-4xl mx-auto p-6">
-    <!-- Dropdown and Create New Card Button -->
-    <div class="mb-6 flex items-end gap-4">
-      <div class="flex-1 max-w-xs">
-        <label
-          for="bingo-card-select"
-          class="block text-sm font-medium text-gray-700 mb-2"
-        >
-          Select Bingo Card:
-        </label>
-        <select
-          id="bingo-card-select"
-          v-model="selectedCardIndex"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        >
-          <option
-            v-for="(bingoCard, index) in bingoCardResourceList"
-            :key="bingoCard._id?.$oid || index"
-            :value="index"
-          >
-            {{ bingoCard.prospectName || `Card ${index + 1}` }}
-          </option>
-        </select>
-      </div>
-      
-      <button
-        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-        @click="createNewBingoCard"
-      >
-        Create Card
-      </button>
-      
-      <button
-        v-if="activeBingoCard && bingoCardResourceList.length > 1"
-        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-        @click="deleteBingoCard"
-      >
-        Delete Card
-      </button>
-    </div>
-
+  <div class="max-w-2xl mx-auto">
     <!-- Bingo Card Grid -->
     <div
       v-if="activeBingoCard"
-      class="bg-white rounded-lg shadow-lg p-6"
+      class="bg-white rounded-lg shadow-lg pt-6 pb-16"
     >
       <!-- Editable Prospect Name -->
       <div class="text-center mb-6">
@@ -146,6 +106,40 @@
       <p class="text-gray-600">
         No bingo cards available.
       </p>
+    </div>
+
+    <!-- Dropdown and Create New Card Button -->
+    <div class="mt-6 flex items-end gap-4">
+      <div class="flex-1 max-w-xs">
+        <select
+          id="bingo-card-select"
+          v-model="selectedCardIndex"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+          <option
+            v-for="(bingoCard, index) in bingoCardResourceList"
+            :key="bingoCard._id?.$oid || index"
+            :value="index"
+          >
+            {{ bingoCard.prospectName || `Card ${index + 1}` }}
+          </option>
+        </select>
+      </div>
+      
+      <button
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+        @click="createNewBingoCard"
+      >
+        Create Card
+      </button>
+      
+      <button
+        v-if="activeBingoCard && bingoCardResourceList.length > 1"
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+        @click="deleteBingoCard"
+      >
+        Delete Card
+      </button>
     </div>
   </div>
 </template>

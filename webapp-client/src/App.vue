@@ -2,15 +2,22 @@
   <NavbarTop />
   <div class="flex w-full">
     <span 
-      class="flex-1 text-center py-2 bg-gray-100 border-b-2 border-gray-300
-    cursor-pointer hover:bg-gray-200"
+      class="flex-1 text-center py-2 border-b-2 border-gray-300 cursor-pointer"
+      :class="{
+        'bg-blue-500 text-white': !state.showCriteriaForm,
+        'bg-gray-100 text-gray-700 hover:bg-gray-200': state.showCriteriaForm
+      }"
       @click="state.showCriteriaForm = false"
     >
       Bingo
     </span>
     <span 
-      class="flex-1 text-center py-2 bg-gray-100 border-b-2 border-gray-300
-    cursor-pointer hover:bg-gray-200"
+      class="flex-1 text-center py-2 border-b-2 border-gray-300
+    cursor-pointer"
+      :class="{
+        'bg-blue-500 text-white': state.showCriteriaForm,
+        'bg-gray-100 text-gray-700 hover:bg-gray-200': !state.showCriteriaForm
+      }"
       @click="state.showCriteriaForm = true"
     >
       Criteria
