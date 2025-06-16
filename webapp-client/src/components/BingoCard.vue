@@ -131,8 +131,8 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
   
   // Shuffle the available corner indices
   for (let i = availableCornerIndices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[availableCornerIndices[i], availableCornerIndices[j]] = [availableCornerIndices[j], availableCornerIndices[i]]
+    const j = Math.floor(Math.random() * (i + 1));
+    [availableCornerIndices[i], availableCornerIndices[j]] = [availableCornerIndices[j], availableCornerIndices[i]];
   }
   
   // Assign shuffled indices to uninitialized corners
@@ -155,8 +155,8 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
   
   // Shuffle available indices
   for (let i = availableIndices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[availableIndices[i], availableIndices[j]] = [availableIndices[j], availableIndices[i]]
+    const j = Math.floor(Math.random() * (i + 1));
+    [availableIndices[i], availableIndices[j]] = [availableIndices[j], availableIndices[i]]
   }
   
   // Assign random indices to remaining squares with value -1
