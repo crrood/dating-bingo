@@ -2,7 +2,7 @@
 	log default {
 		output stdout
 		format json {
-			time_format common_log
+			time_format wall
 		}
 		level DEBUG
 	}
