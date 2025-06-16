@@ -28,9 +28,51 @@
       v-if="activeBingoCard"
       class="bg-white rounded-lg shadow-lg p-6"
     >
-      <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">
-        {{ activeBingoCard.prospectName }}
-      </h2>
+      <!-- Editable Prospect Name -->
+      <div class="text-center mb-6">
+        <div
+          v-if="!isEditingName"
+          class="text-2xl font-bold text-gray-800 cursor-pointer hover:text-blue-600 transition-colors duration-200 inline-flex items-center gap-2"
+          @click="startEditingName"
+        >
+          {{ activeBingoCard.prospectName }}
+          <Icon
+            icon="material-symbols:edit"
+            class="text-lg text-gray-400 hover:text-gray-600 transition-colors duration-200"
+          />
+        </div>
+        <div
+          v-else
+          class="flex items-center justify-center gap-2"
+        >
+          <input
+            ref="nameInput"
+            v-model="editingName"
+            class="text-2xl font-bold text-gray-800 text-center border-b-2 border-blue-500 bg-transparent focus:outline-none focus:border-blue-700 min-w-0"
+            @blur="saveProspectName"
+            @keyup.enter="saveProspectName"
+            @keyup.escape="cancelEditing"
+          >
+          <button
+            class="text-green-600 hover:text-green-800"
+            @click="saveProspectName"
+          >
+            <Icon
+              icon="material-symbols:check"
+              class="text-lg"
+            />
+          </button>
+          <button
+            class="text-red-600 hover:text-red-800"
+            @click="cancelEditing"
+          >
+            <Icon
+              icon="material-symbols:close"
+              class="text-lg"
+            />
+          </button>
+        </div>
+      </div>
       
       <div class="grid grid-cols-5 gap-0 max-w-lg mx-auto border-[1px] border-gray-300">
         <div
@@ -93,7 +135,7 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import type { BingoCardResource, BingoSquare } from '../Types';
 
 // Props
@@ -109,6 +151,9 @@ const emit = defineEmits<{
 
 // Local state
 const selectedCardIndex = ref(0)
+const isEditingName = ref(false)
+const editingName = ref('')
+const nameInput = ref<HTMLInputElement>()
 
 // Computed properties
 const activeBingoCard = computed(() => {
@@ -204,6 +249,34 @@ const toggleSquare = (rowIndex: number, colIndex: number) => {
   
   // Emit update to parent
   emit('update:bingoCardResource', resource)
+}
+
+// Functions for editing prospect name
+const startEditingName = async () => {
+  if (!activeBingoCard.value) return
+  
+  editingName.value = activeBingoCard.value.prospectName
+  isEditingName.value = true
+  
+  // Focus the input field after Vue updates the DOM
+  await nextTick()
+  nameInput.value?.focus()
+}
+
+const saveProspectName = () => {
+  if (!activeBingoCard.value) return
+  
+  const trimmedName = editingName.value.trim()
+  if (trimmedName) {
+    activeBingoCard.value.prospectName = trimmedName
+    emit('update:bingoCardResource', activeBingoCard.value)
+  }
+  isEditingName.value = false
+}
+
+const cancelEditing = () => {
+  isEditingName.value = false
+  editingName.value = ''
 }
 
 // Watch for changes to bingoCardResourceList and initialize tile matrices as needed
