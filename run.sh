@@ -1,5 +1,5 @@
 #!/bin/bash
-while getopts "bcp" opt; do
+while getopts "bcpd" opt; do
   case $opt in
     c)
       RESET_CADDY=true
@@ -9,6 +9,9 @@ while getopts "bcp" opt; do
       ;;
     p)
       PROD=true
+      ;;
+    d)
+      DETACHED=true
       ;;
   esac
 done
@@ -38,11 +41,15 @@ if [ $BUILD ]; then
       rm .env
       cd ..
     else
-      echo "vite not installed in webapp-client, run 'npm install'"
+      echo "vite not installed in client, run 'npm install'"
       cd ..
       exit 1
     fi
   fi
 fi
-docker compose --env-file ${ENV_FILE} up --abort-on-container-exit
-docker compose --env-file ${ENV_FILE} down --volumes
+if [ $DETACHED ]; then
+  docker compose --env-file ${ENV_FILE} up --detach
+else
+  docker compose --env-file ${ENV_FILE} up --abort-on-container-exit
+  docker compose --env-file ${ENV_FILE} down --volumes
+fi
