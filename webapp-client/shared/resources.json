@@ -1,7 +1,7 @@
 {
   "bingoCard": [
     {
-      "prospectName": "Marieka",
+      "prospectName": "German girl",
       "tileMatrix": [
         [
           {
@@ -116,7 +116,7 @@
       ]
     },
     {
-      "prospectName": "Gabby",
+      "prospectName": "Hippy girl",
       "tileMatrix": [
         [
           {
@@ -234,31 +234,31 @@
   "criteriaArray": [
     {
       "criteria": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "20",
-        "21",
-        "22",
-        "23",
-        "24"
+        "Attractive",
+        "Smart",
+        "Has a job",
+        "Funny",
+        "Likes to drink",
+        "Empathetic",
+        "Social",
+        "Good style",
+        "Good communication",
+        "Not outdoorsy",
+        "Nice legs",
+        "Nice butt",
+        "Likes video games",
+        "Likes fantasy / sci-fi",
+        "Likes live music",
+        "Self-aware",
+        "Creative",
+        "Adventurous",
+        "Speaks another language",
+        "Likes dressing up",
+        "Healthy",
+        "Fun hobbies",
+        "Intesting job",
+        "Tall",
+        "Likes food"
       ]
     }
   ]
