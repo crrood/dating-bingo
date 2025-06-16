@@ -32,7 +32,7 @@
         {{ activeBingoCard.prospectName }}
       </h2>
       
-      <div class="grid grid-cols-5 gap-2 max-w-lg mx-auto">
+      <div class="grid grid-cols-5 gap-0 max-w-lg mx-auto border-[1px] border-gray-300">
         <div
           v-for="(row, rowIndex) in activeBingoCard.tileMatrix"
           :key="`row-${rowIndex}`"
@@ -40,17 +40,40 @@
           <div
             v-for="(square, colIndex) in row"
             :key="`square-${rowIndex}-${colIndex}`"
-            class="aspect-square border-2 border-gray-300 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:border-blue-400 p-2"
+            class="relative aspect-square border-[1px] border-gray-300 flex items-center justify-center cursor-pointer transition-all duration-300 hover:border-blue-400 p-2"
             :class="{
               'bg-blue-500 text-white border-blue-600': square.checked,
               'bg-white text-gray-800': !square.checked,
-              'bg-yellow-200 border-yellow-400': rowIndex === 2 && colIndex === 2 && !square.checked
+              'bg-yellow-200 border-yellow-400': rowIndex === 2 && colIndex === 2 && !square.checked,
+              'text-black': rowIndex === 2 && colIndex === 2 && square.checked,
             }"
             @click="toggleSquare(rowIndex, colIndex)"
           >
-            <span class="text-xs text-center leading-tight">
+            <span class="z-10 text-xs text-center select-none leading-tight">
               {{ getCriteriaText(square.index) }}
             </span>
+            <Icon
+              v-if="square.checked"
+              icon="material-symbols:check"
+              width="36"
+              class="absolute text-white text-lg top-0 left-0"
+            />
+            <Icon
+              v-if="rowIndex === 2 && colIndex === 2"
+              icon="material-symbols-light:star"
+              width="100%"
+              class="absolute text-white text-lg"
+            />
+            <Icon
+              v-if="[[1, 1], [1, 3], [3, 1], [3, 3], [0, 0], [0, 4], [4, 0], [4, 4]].some(([r, c]) => r === rowIndex && c === colIndex)"
+              icon="arcticons:circle"
+              width="80%"
+              class="absolute"
+              :class="{
+                'text-gray-300': !square.checked,
+                'text-white': square.checked
+              }"
+            />
           </div>
         </div>
       </div>
@@ -69,6 +92,7 @@
 </template>
 
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { computed, ref, watch } from 'vue';
 import type { BingoCardResource, BingoSquare } from '../Types';
 
@@ -113,14 +137,14 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
     tileMatrix[centerRow][centerCol].index = 0
   }
   usedIndices.add(tileMatrix[centerRow][centerCol].index)
-  
-  // Randomize indices 1-4 among corner squares
-  const corners = [
+
+  // Randomize indices 1-8 among important tiles
+  const importantTiles = [
     [1, 1], [1, 3], [3, 1], [3, 3], [0, 0], [0, 4], [4, 0], [4, 4]
   ]
-  
-  // Collect already used indices from corners
-  corners.forEach(([row, col]) => {
+
+  // Collect already used indices from important tiles
+  importantTiles.forEach(([row, col]) => {
     if (tileMatrix[row][col].index !== -1) {
       usedIndices.add(tileMatrix[row][col].index)
     }
@@ -137,7 +161,7 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
   
   // Assign shuffled indices to uninitialized corners
   let cornerIndexCounter = 0
-  corners.forEach(([row, col]) => {
+  importantTiles.forEach(([row, col]) => {
     if (tileMatrix[row][col].index === -1 && cornerIndexCounter < availableCornerIndices.length) {
       tileMatrix[row][col].index = availableCornerIndices[cornerIndexCounter]
       usedIndices.add(availableCornerIndices[cornerIndexCounter])
