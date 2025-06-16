@@ -1,18 +1,17 @@
-export interface Resource {
+export interface CriteriaResource {
   _id?: {
     $oid: string;
   }
   metadata?: MetaData;
-  data: BingoCard | CriteriaArray;
-}
-
-export interface MetaData {
-  createdAt: string
-  updatedAt: string
+  criteria: string[];
 }
 
 // A BingoCard is a 5x5 matrix of BingoSquares
-export interface BingoCard {
+export interface BingoCardResource {
+  _id?: {
+    $oid: string;
+  }
+  metadata?: MetaData;
   prospectName: string;
   tileMatrix: BingoSquare[][];
 }
@@ -24,8 +23,7 @@ export interface BingoSquare {
   checked: boolean;
 }
 
-// List of criteria, shared between all BingoCards
-// 0 is the center square, 1-4 are important, 5-24 are less important
-export interface CriteriaArray {
-  criteria: string[];
+export interface MetaData {
+  createdAt: string
+  updatedAt: string
 }

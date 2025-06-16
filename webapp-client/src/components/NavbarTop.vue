@@ -5,24 +5,14 @@
     aria-label="main navigation"
   >
     <div class="">
-      <router-link
-        class=""
-        to="/"
+      <img
+        class="w-24 h-24"
+        src="https://placebear.com/96/96"
       >
-        <img
-          class="w-24 h-24"
-          src="https://placebear.com/96/96"
-        >
-      </router-link>
     </div>
 
     <div class="flex justify-start place-items-center gap-8 text-2xl">
-      <router-link
-        class=""
-        to="/"
-      >
-        Dating Bingo!
-      </router-link>
+      Dating Bingo!
     </div>
   </nav>
 </template>

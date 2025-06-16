@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainPage from './components/MainPage.vue'
+import CriteriaForm from './components/CriteriaForm.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'MainPage',
-    component: MainPage
+    name: 'CriteriaForm',
+    component: CriteriaForm,
+    props: true
   },
 ]
 
