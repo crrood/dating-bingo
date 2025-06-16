@@ -80,7 +80,7 @@ const props = defineProps<{
 
 // Emit events for updating the bingo card data
 const emit = defineEmits<{
-  'update:bingoCardResourceList': [value: BingoCardResource[]]
+  'update:bingoCardResource': [value: BingoCardResource]
 }>()
 
 // Local state
@@ -169,6 +169,7 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
       }
     }
   }
+  emit('update:bingoCardResource', bingoCard)
 }
 
 // Function to toggle a square's checked state
@@ -178,8 +179,7 @@ const toggleSquare = (rowIndex: number, colIndex: number) => {
   square.checked = !square.checked
   
   // Emit update to parent
-  const updatedList = [...props.bingoCardResourceList]
-  emit('update:bingoCardResourceList', updatedList)
+  emit('update:bingoCardResource', resource)
 }
 
 // Watch for changes to bingoCardResourceList and initialize tile matrices as needed

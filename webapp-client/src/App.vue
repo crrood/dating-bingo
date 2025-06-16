@@ -25,6 +25,7 @@
     v-if="!state.showCriteriaForm && state.bingoCardResourceList && state.criteriaResource.criteria"
     :criteriaArray="state.criteriaResource.criteria"
     :bingoCardResourceList="state.bingoCardResourceList"
+    @update:bingo-card-resource="updateBingoCardResource"
   />
 </template>
 
@@ -44,7 +45,7 @@ interface State {
 const state: State = reactive({
   criteriaResource: {criteria: []},
   bingoCardResourceList: [],
-  showCriteriaForm: true,
+  showCriteriaForm: false,
 });
 
 axios.get("/api/criteriaArray").then((response) => {
@@ -74,6 +75,22 @@ function criteriaUpdated(newCriteriaArray: string[]) {
     })
     .catch((error) => {
       console.error("Error updating criteria array:", error);
+    });
+}
+
+function updateBingoCardResource(updatedResource: BingoCardResource) {
+  const index = state.bingoCardResourceList.findIndex(
+    (resource) => resource._id?.$oid === updatedResource._id?.$oid
+  );
+  if (index !== -1) {
+    state.bingoCardResourceList[index] = updatedResource;
+  }
+  axios.put(`/api/bingoCard`, updatedResource)
+    .then((response) => {
+      console.log("Successfully updated bingo card resource:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error updating bingo card resource:", error);
     });
 }
 
