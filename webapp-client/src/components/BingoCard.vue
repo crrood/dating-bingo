@@ -116,7 +116,7 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
   
   // Randomize indices 1-4 among corner squares
   const corners = [
-    [1, 1], [1, 3], [3, 1], [3, 3]
+    [1, 1], [1, 3], [3, 1], [3, 3], [0, 0], [0, 4], [4, 0], [4, 4]
   ]
   
   // Collect already used indices from corners
@@ -125,9 +125,9 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
       usedIndices.add(tileMatrix[row][col].index)
     }
   })
-  
-  // Get available corner indices (1-4 that aren't already used)
-  const availableCornerIndices = [1, 2, 3, 4].filter(index => !usedIndices.has(index))
+
+  // Get available corner indices (1-8 that aren't already used)
+  const availableCornerIndices = [1, 2, 3, 4, 5, 6, 7, 8].filter(index => !usedIndices.has(index))
   
   // Shuffle the available corner indices
   for (let i = availableCornerIndices.length - 1; i > 0; i--) {

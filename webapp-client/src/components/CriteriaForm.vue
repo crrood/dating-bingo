@@ -4,12 +4,9 @@
     @submit="$event.preventDefault()"
   >
     <div>
-      <label
-        for="center-square"
-        class="block text-sm font-medium text-gray-700 mb-2"
-      >
+      <h3 class="text-lg font-semibold text-gray-800 mb-8">
         Center square
-      </label>
+      </h3>
       <input
         id="center-square"
         v-model="centerSquare"
@@ -19,23 +16,17 @@
     </div>
 
     <div>
-      <h3 class="text-lg font-semibold text-gray-800 mb-4">
-        Must haves
+      <h3 class="text-lg font-semibold text-gray-800 mb-8">
+        Important
       </h3>
-      <div class="space-y-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div
-          v-for="i in 4"
+          v-for="i in 8"
           :key="`must-have-${i}`"
         >
-          <label
-            :for="`must-have-${i}`"
-            class="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Must have {{ i }}
-          </label>
           <input
             :id="`must-have-${i}`"
-            v-model="mustHaves[i - 1]"
+            v-model="important[i - 1]"
             type="text"
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
@@ -44,20 +35,14 @@
     </div>
 
     <div>
-      <h3 class="text-lg font-semibold text-gray-800 mb-4">
-        Nice to haves
+      <h3 class="text-lg font-semibold text-gray-800 mb-8">
+        Nice to have
       </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div
-          v-for="i in 20"
+          v-for="i in 16"
           :key="`nice-to-have-${i}`"
         >
-          <label
-            :for="`nice-to-have-${i}`"
-            class="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Nice to have {{ i }}
-          </label>
           <input
             :id="`nice-to-have-${i}`"
             v-model="niceToHaves[i - 1]"
@@ -95,22 +80,22 @@ const emit = defineEmits<{
 
 // Local reactive data
 const centerSquare = ref('')
-const mustHaves = ref<string[]>(Array(4).fill(''))
-const niceToHaves = ref<string[]>(Array(20).fill(''))
+const important = ref<string[]>(Array(8).fill(''))
+const niceToHaves = ref<string[]>(Array(16).fill(''))
 
 // Initialize local data from prop
 const initializeFromProp = () => {
   const criteria = [...props.criteriaArray]
   centerSquare.value = criteria[0] || ''
   
-  // Must haves (indices 1-4)
-  for (let i = 0; i < 4; i++) {
-    mustHaves.value[i] = criteria[i + 1] || ''
+  // Important (indices 1-8)
+  for (let i = 0; i < 8; i++) {
+    important.value[i] = criteria[i + 1] || ''
   }
   
-  // Nice to haves (indices 5-24)
-  for (let i = 0; i < 20; i++) {
-    niceToHaves.value[i] = criteria[i + 5] || ''
+  // Nice to haves (indices 9-24)
+  for (let i = 0; i < 16; i++) {
+    niceToHaves.value[i] = criteria[i + 9] || ''
   }
 }
 
@@ -126,20 +111,20 @@ watch(() => props.criteriaArray, () => {
 const updateCriteriaArray = () => {
   const criteriaArray = [
     centerSquare.value,
-    ...mustHaves.value,
+    ...important.value,
     ...niceToHaves.value
   ]
   emit('update:criteriaArray', criteriaArray)
 }
 
 watch(centerSquare, updateCriteriaArray)
-watch(mustHaves, updateCriteriaArray, { deep: true })
+watch(important, updateCriteriaArray, { deep: true })
 watch(niceToHaves, updateCriteriaArray, { deep: true })
 
 const submitCriteria = async () => {
   const criteriaArray = [
     centerSquare.value,
-    ...mustHaves.value,
+    ...important.value,
     ...niceToHaves.value
   ].filter(item => item.trim() !== '')
 
