@@ -104,7 +104,7 @@
               'bg-blue-500 text-white border-blue-600': square.checked,
               'bg-white text-gray-800': !square.checked,
               'bg-yellow-200 border-yellow-400': rowIndex === 2 && colIndex === 2 && !square.checked,
-              'text-black': rowIndex === 2 && colIndex === 2 && square.checked,
+              'bg-green-600 text-gray-900': rowIndex === 2 && colIndex === 2 && square.checked,
             }"
             @click="toggleSquare(rowIndex, colIndex)"
           >
@@ -114,7 +114,7 @@
             <Icon
               v-if="square.checked"
               icon="material-symbols:check"
-              width="36"
+              width="32"
               class="absolute text-white text-lg top-0 left-0"
             />
             <Icon
