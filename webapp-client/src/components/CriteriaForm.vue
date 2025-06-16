@@ -65,7 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios';
 import { ref, watch } from 'vue';
 
 // Props
@@ -107,31 +106,13 @@ watch(() => props.criteriaArray, () => {
   initializeFromProp()
 }, { deep: true })
 
-// Watch local data changes and emit updates
-const updateCriteriaArray = () => {
-  const criteriaArray = [
-    centerSquare.value,
-    ...important.value,
-    ...niceToHaves.value
-  ]
-  emit('update:criteriaArray', criteriaArray)
-}
-
-watch(centerSquare, updateCriteriaArray)
-watch(important, updateCriteriaArray, { deep: true })
-watch(niceToHaves, updateCriteriaArray, { deep: true })
-
 const submitCriteria = async () => {
   const criteriaArray = [
     centerSquare.value,
     ...important.value,
     ...niceToHaves.value
   ].filter(item => item.trim() !== '')
-
-  try {
-    await axios.put('/api/criteriaArray', { criteria: criteriaArray })
-  } catch (error) {
-    console.error('Error submitting criteria:', error)
-  }
+  emit('update:criteriaArray', criteriaArray)
+  console.log('Submitting criteria:', criteriaArray)
 }
 </script>

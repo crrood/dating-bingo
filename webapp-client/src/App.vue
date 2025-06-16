@@ -4,28 +4,28 @@
     <span 
       class="flex-1 text-center py-2 bg-gray-100 border-b-2 border-gray-300
     cursor-pointer hover:bg-gray-200"
-      @click="state.showCriteriaForm = true"
+      @click="state.showCriteriaForm = false"
     >
-      Criteria
+      Bingo
     </span>
     <span 
       class="flex-1 text-center py-2 bg-gray-100 border-b-2 border-gray-300
     cursor-pointer hover:bg-gray-200"
-      @click="state.showCriteriaForm = false"
+      @click="state.showCriteriaForm = true"
     >
-      Bingo
+      Criteria
     </span>
   </div>
   <CriteriaForm
     v-if="state.showCriteriaForm && state.criteriaResource.criteria"
     :criteriaArray="state.criteriaResource.criteria"
-    @update:criteria-array="criteriaUpdated"
+    @update:criteria-array="criteriaArrayUpdated"
   />
   <BingoCard
     v-if="!state.showCriteriaForm && state.bingoCardResourceList && state.criteriaResource.criteria"
     :criteriaArray="state.criteriaResource.criteria"
     :bingoCardResourceList="state.bingoCardResourceList"
-    @update:bingo-card-resource="updateBingoCardResource"
+    @update:bingo-card-resource="bingoCardResourceUpdated"
   />
 </template>
 
@@ -66,7 +66,7 @@ axios.get("/api/bingoCard").then((response) => {
   console.error("Error fetching bingo cards:", error);
 });
 
-function criteriaUpdated(newCriteriaArray: string[]) {
+function criteriaArrayUpdated(newCriteriaArray: string[]) {
   console.log("Criteria array updated:", newCriteriaArray);
   state.criteriaResource.criteria = newCriteriaArray;
   axios.put(`/api/criteriaArray/${state.criteriaResource._id?.$oid}`, state.criteriaResource)
@@ -78,7 +78,7 @@ function criteriaUpdated(newCriteriaArray: string[]) {
     });
 }
 
-function updateBingoCardResource(updatedResource: BingoCardResource) {
+function bingoCardResourceUpdated(updatedResource: BingoCardResource) {
   const index = state.bingoCardResourceList.findIndex(
     (resource) => resource._id?.$oid === updatedResource._id?.$oid
   );
