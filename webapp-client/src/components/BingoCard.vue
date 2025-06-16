@@ -145,7 +145,7 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { BingoCardResource, BingoSquare } from '../Types';
 
 // Props
@@ -173,7 +173,7 @@ const activeBingoCard = computed(() => {
 })
 
 // Utility function to get criteria text by index
-const getCriteriaText = (index: number): string => {
+function getCriteriaText(index: number): string {
   if (index < 0 || index >= props.criteriaArray.length) {
     return ''
   }
@@ -181,7 +181,7 @@ const getCriteriaText = (index: number): string => {
 }
 
 // Function to generate random indices for uninitialized squares
-const initializeTileMatrix = (bingoCard: BingoCardResource) => {
+function initializeTileMatrix(bingoCard: BingoCardResource) {
   const tileMatrix = bingoCard.tileMatrix
   const centerRow = 2
   const centerCol = 2
@@ -250,11 +250,10 @@ const initializeTileMatrix = (bingoCard: BingoCardResource) => {
       }
     }
   }
-  emit('update:bingoCardResource', bingoCard)
 }
 
 // Function to toggle a square's checked state
-const toggleSquare = (rowIndex: number, colIndex: number) => {
+function toggleSquare(rowIndex: number, colIndex: number) {
   const resource = props.bingoCardResourceList[selectedCardIndex.value]
   const square = resource.tileMatrix[rowIndex][colIndex]
   square.checked = !square.checked
@@ -264,18 +263,14 @@ const toggleSquare = (rowIndex: number, colIndex: number) => {
 }
 
 // Functions for editing prospect name
-const startEditingName = async () => {
+function startEditingName() {
   if (!activeBingoCard.value) return
   
   editingName.value = activeBingoCard.value.prospectName
   isEditingName.value = true
-  
-  // Focus the input field after Vue updates the DOM
-  await nextTick()
-  nameInput.value?.focus()
 }
 
-const saveProspectName = () => {
+function saveProspectName() {
   if (!activeBingoCard.value) return
   
   const trimmedName = editingName.value.trim()
@@ -292,7 +287,7 @@ const cancelEditing = () => {
 }
 
 // Function to create a new bingo card
-const createNewBingoCard = () => {
+function createNewBingoCard() {
   // Create empty 5x5 tile matrix with all indices set to -1
   const emptyTileMatrix: BingoSquare[][] = []
   for (let row = 0; row < 5; row++) {
@@ -322,7 +317,7 @@ const createNewBingoCard = () => {
 }
 
 // Function to delete the currently selected bingo card
-const deleteBingoCard = () => {
+function deleteBingoCard() {
   if (!activeBingoCard.value || props.bingoCardResourceList.length <= 1) {
     return
   }
@@ -347,7 +342,8 @@ watch(() => props.bingoCardResourceList, (newList: BingoCardResource[]) => {
     )
     
     if (hasUninitialized) {
-      initializeTileMatrix(resource)
+      initializeTileMatrix(resource);
+      emit('update:bingoCardResource', resource);
     }
   })
 }, { immediate: true, deep: true })
