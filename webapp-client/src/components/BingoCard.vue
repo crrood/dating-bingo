@@ -1,26 +1,43 @@
 <template>
   <div class="max-w-4xl mx-auto p-6">
-    <!-- Dropdown for selecting bingo card -->
-    <div class="mb-6">
-      <label
-        for="bingo-card-select"
-        class="block text-sm font-medium text-gray-700 mb-2"
-      >
-        Select Bingo Card:
-      </label>
-      <select
-        id="bingo-card-select"
-        v-model="selectedCardIndex"
-        class="w-full max-w-xs px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      >
-        <option
-          v-for="(bingoCard, index) in bingoCardResourceList"
-          :key="bingoCard._id?.$oid || index"
-          :value="index"
+    <!-- Dropdown and Create New Card Button -->
+    <div class="mb-6 flex items-end gap-4">
+      <div class="flex-1 max-w-xs">
+        <label
+          for="bingo-card-select"
+          class="block text-sm font-medium text-gray-700 mb-2"
         >
-          {{ bingoCard.prospectName || `Card ${index + 1}` }}
-        </option>
-      </select>
+          Select Bingo Card:
+        </label>
+        <select
+          id="bingo-card-select"
+          v-model="selectedCardIndex"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+          <option
+            v-for="(bingoCard, index) in bingoCardResourceList"
+            :key="bingoCard._id?.$oid || index"
+            :value="index"
+          >
+            {{ bingoCard.prospectName || `Card ${index + 1}` }}
+          </option>
+        </select>
+      </div>
+      
+      <button
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+        @click="createNewBingoCard"
+      >
+        Create Card
+      </button>
+      
+      <button
+        v-if="activeBingoCard && bingoCardResourceList.length > 1"
+        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+        @click="deleteBingoCard"
+      >
+        Delete Card
+      </button>
     </div>
 
     <!-- Bingo Card Grid -->
@@ -147,6 +164,8 @@ const props = defineProps<{
 // Emit events for updating the bingo card data
 const emit = defineEmits<{
   'update:bingoCardResource': [value: BingoCardResource]
+  'create:bingoCardResource': [value: BingoCardResource]
+  'delete:bingoCardResource': [value: BingoCardResource]
 }>()
 
 // Local state
@@ -277,6 +296,53 @@ const saveProspectName = () => {
 const cancelEditing = () => {
   isEditingName.value = false
   editingName.value = ''
+}
+
+// Function to create a new bingo card
+const createNewBingoCard = () => {
+  // Create empty 5x5 tile matrix with all indices set to -1
+  const emptyTileMatrix: BingoSquare[][] = []
+  for (let row = 0; row < 5; row++) {
+    const rowArray: BingoSquare[] = []
+    for (let col = 0; col < 5; col++) {
+      rowArray.push({
+        index: -1,
+        checked: false
+      })
+    }
+    emptyTileMatrix.push(rowArray)
+  }
+
+  const newBingoCard: BingoCardResource = {
+    prospectName: `New Card ${props.bingoCardResourceList.length + 1}`,
+    tileMatrix: emptyTileMatrix
+  }
+
+  // Initialize the tile matrix for the new card
+  initializeTileMatrix(newBingoCard)
+
+  // Emit the new card to the parent component
+  emit('create:bingoCardResource', newBingoCard)
+
+  // Switch to the new card
+  selectedCardIndex.value = props.bingoCardResourceList.length
+}
+
+// Function to delete the currently selected bingo card
+const deleteBingoCard = () => {
+  if (!activeBingoCard.value || props.bingoCardResourceList.length <= 1) {
+    return
+  }
+
+  if (confirm(`Are you sure you want to delete "${activeBingoCard.value.prospectName}"?`)) {
+    // Emit delete event to parent component
+    emit('delete:bingoCardResource', activeBingoCard.value)
+
+    // Adjust selectedCardIndex if necessary
+    if (selectedCardIndex.value >= props.bingoCardResourceList.length - 1) {
+      selectedCardIndex.value = Math.max(0, props.bingoCardResourceList.length - 2)
+    }
+  }
 }
 
 // Watch for changes to bingoCardResourceList and initialize tile matrices as needed

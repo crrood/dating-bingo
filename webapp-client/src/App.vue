@@ -26,6 +26,8 @@
     :criteriaArray="state.criteriaResource.criteria"
     :bingoCardResourceList="state.bingoCardResourceList"
     @update:bingo-card-resource="bingoCardResourceUpdated"
+    @create:bingo-card-resource="bingoCardResourceCreated"
+    @delete:bingo-card-resource="bingoCardResourceDeleted"
   />
 </template>
 
@@ -91,6 +93,44 @@ function bingoCardResourceUpdated(updatedResource: BingoCardResource) {
     })
     .catch((error) => {
       console.error("Error updating bingo card resource:", error);
+    });
+}
+
+function bingoCardResourceCreated(newResource: BingoCardResource) {
+  console.log("Creating new bingo card:", newResource);
+  axios.put(`/api/bingoCard`, newResource)
+    .then((response) => {
+      console.log("Successfully created bingo card:", response.data);
+      // Add the new card to the list with the returned ID
+      const createdCard = { ...newResource, _id: { $oid: response.data.id } };
+      state.bingoCardResourceList.push(createdCard);
+    })
+    .catch((error) => {
+      console.error("Error creating bingo card:", error);
+    });
+}
+
+function bingoCardResourceDeleted(deletedResource: BingoCardResource) {
+  console.log("Deleting bingo card:", deletedResource);
+  
+  if (!deletedResource._id?.$oid) {
+    console.error("Cannot delete bingo card: missing ID");
+    return;
+  }
+
+  axios.delete(`/api/bingoCard/${deletedResource._id.$oid}`)
+    .then((response) => {
+      console.log("Successfully deleted bingo card:", response.data);
+      // Remove the card from the list
+      const index = state.bingoCardResourceList.findIndex(
+        (resource) => resource._id?.$oid === deletedResource._id?.$oid
+      );
+      if (index !== -1) {
+        state.bingoCardResourceList.splice(index, 1);
+      }
+    })
+    .catch((error) => {
+      console.error("Error deleting bingo card:", error);
     });
 }
 

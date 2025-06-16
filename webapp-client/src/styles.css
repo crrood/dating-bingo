@@ -18,12 +18,3 @@ input[type='number']:disabled::-webkit-inner-spin-button, input[type='number']:d
 input[type='number']:disabled {
   -moz-appearance: textfield;
 }
-
-/* CUSTOM CLASSES */
-.btn-primary {
-  @apply bg-accent hover:bg-accent-dark px-4 py-3 rounded-full text-white font-bold;
-}
-
-.btn-warning {
-  @apply bg-orange-500 hover:bg-orange-600 px-4 py-3 rounded-full text-white font-bold;
-}
